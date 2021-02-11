@@ -6,18 +6,24 @@ environment_variables:
     
 phases:
   install:
+    runtime-versions:
+      docker: 18
     commands:                                                                 
       - cd /tmp
-      - wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_extended_0.80.0_Linux-64bit.tar.gz
-      - tar -xzf hugo_extended_0.80.0_Linux-64bit.tar.gz
+      - wget https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
+      - tar -xzf hugo_${HUGO_VERSION}_Linux-64bit.tar.gz
       - mv hugo /usr/bin/hugo
-      - cd 
+      - cd - 
       - rm -rf /tmp/*
   build:
     commands:
       - rm -rf public
       - hugo
-      #- aws s3 sync public/ s3://jch16-hugo-website/ --region us-east-2 --delete
+      - aws s3 sync public/ s3://jch16-hugo-website/ --region us-east-2 --delete
   post_build:
     commands:
       - echo Build completed on `date`
+      
+      
+      
+     
