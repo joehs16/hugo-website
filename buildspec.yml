@@ -16,7 +16,8 @@ phases:
   build:
     commands:
       - rm -rf public
-      - hugo 
+      - hugo
+      - hugo deploy
   post_build:
     commands:
       - aws s3 sync --delete public s3://jch16-hugo-website
